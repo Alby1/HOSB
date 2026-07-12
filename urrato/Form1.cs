@@ -22,7 +22,7 @@ public partial class Form1 : Form
     private readonly GlobalHotkeys stop;
 
     private readonly List<string> GlobTracks = [];
-    List<CustomSoundButton>? GlobButtons;
+    private List<CustomSoundButton>? GlobButtons;
 
     public Form1()
     {
@@ -68,6 +68,8 @@ public partial class Form1 : Form
 
         try
         {
+            GlobTracks.Clear();
+
             // Source - https://stackoverflow.com/a/929418
             // Posted by Marc Gravell, modified by community. See post 'Timeline' for change history
             // Retrieved 2026-07-12, License - CC BY-SA 4.0

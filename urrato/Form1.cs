@@ -21,7 +21,7 @@ public partial class Form1 : Form
     private readonly GlobalHotkeys[] hk = new GlobalHotkeys[10];
     private readonly GlobalHotkeys stop;
 
-    List<string>? GlobTracks;
+    private readonly List<string> GlobTracks = [];
     List<CustomSoundButton>? GlobButtons;
 
     public Form1()
@@ -68,7 +68,14 @@ public partial class Form1 : Form
 
         try
         {
-            GlobTracks = [.. Directory.GetFiles(Settings.Default.SoundsDir)];
+            // Source - https://stackoverflow.com/a/929418
+            // Posted by Marc Gravell, modified by community. See post 'Timeline' for change history
+            // Retrieved 2026-07-12, License - CC BY-SA 4.0
+
+            foreach (string file in Directory.EnumerateFiles(Settings.Default.SoundsDir, "*.*", SearchOption.AllDirectories))
+            {
+                GlobTracks.Add(file);
+            }
         }
         catch
         {
@@ -91,7 +98,7 @@ public partial class Form1 : Form
         {
             if (track.EndsWith("mp3") || track.EndsWith("mp4") || track.EndsWith("wav") || track.EndsWith("m4a"))
             {
-                CustomSoundButton b = new(track[(track.LastIndexOf('\\') + 1)..]) { Text = track[(track.LastIndexOf('\\') + 1)..], Size = new Size(131, 45), BackColor = Color.FromKnownColor(KnownColor.ControlDark) };
+                CustomSoundButton b = new(track) { Size = new Size(131, 45), BackColor = Color.FromKnownColor(KnownColor.ControlDark) };
                 b.MouseClick += SongButtons_OnClick!;
 
                 ciao.Add(b);
@@ -124,15 +131,15 @@ public partial class Form1 : Form
     public void SongButtons_OnClick(object sender, MouseEventArgs e)
     {
         CustomSoundButton? b = sender as CustomSoundButton;
-        if (b!.fileName == null || b!.fileName == string.Empty) return;
-        PlaySong(b!.fileName, false);
+        if (b!.Filename == null || b!.Filename == string.Empty) return;
+        PlaySong(b!.Filename, false);
     }
 
     public void PlaySong(string filePath, bool isHotKey)
     {
-        filePath = $"{Settings.Default.SoundsDir}\\{filePath}";
         if (!File.Exists(filePath))
         {
+            Debug.WriteLine($"{filePath} does not exist");
             if (!isHotKey) LoadTracks();
             return;
         }

@@ -5,13 +5,20 @@ namespace HOSB
     class CustomSoundButton : Button
     {
 
-        public string fileName;
+        public string Filename;
+        public string Label;
 
-        public CustomSoundButton(string? fileName = null)
+
+        public CustomSoundButton(string fileName)
         {
             ContextMenuStrip giorgio = new();
             ToolStripMenuItem luca = new("Set as...");
-            for(int i = 1; i<=9; i++)
+
+            Label = fileName[(fileName.LastIndexOf('\\') + 1)..];
+            Filename = fileName;
+            Text = Label;
+
+            for (int i = 1; i<=9; i++)
             {
                 int n = i;
                 luca.DropDownItems.Add($"{n}", null, (sender, e) => HotkeySet(n));
@@ -24,18 +31,16 @@ namespace HOSB
             ToolStripMenuItem clipboard = new("Copy to clipboard");
             clipboard.Click += (sender, e) =>
             {
-                Clipboard.SetText(fileName!);
+                Clipboard.SetText(Label!);
             };
             giorgio.Items.Add(clipboard);
 
             ContextMenuStrip = giorgio;
-
-            this.fileName = fileName!;
         }
 
         private void HotkeySet(int a)
         {
-            Settings.Default[$"hot{a}"] = fileName;
+            Settings.Default[$"hot{a}"] = Filename;
             Settings.Default.Save();
 
             Program.hotKeysForm!.ShowHotKeys();

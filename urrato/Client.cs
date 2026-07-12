@@ -6,10 +6,10 @@ namespace HOSB;
 
 class Client
 {
-    private static readonly Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+    private static readonly Socket clientSocket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
     private const int PORT = 7999;
 
-    public static void Mario(string[] args)
+    public static void Mario(string[] _)
     {
         Console.Title = "Client";
         ConnectToServer();
@@ -73,7 +73,7 @@ class Client
         byte[] data = Encoding.UTF8.GetBytes(request);
         clientSocket.Send(data, 0, data.Length, SocketFlags.None);
 
-        if (request.ToLower() == "exit")
+        if (request.ToLower().Equals("exit"))
         {
             Exit();
         }

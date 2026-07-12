@@ -53,23 +53,27 @@ namespace HOSB
             for (int i = 1; i <= 9; i++)
             {
                 string text = Settings.Default[$"hot{i}"].ToString()!;
-                CustomSoundButton button = new CustomSoundButton(text);
                 text = $"Hot Key {i}: " + (text == string.Empty ? "!EMPTY!" : text);
-                button.Name = $"buton{i}";
-                button.AutoSize = true;
-                button.Text = text;
-                button.BackColor = Color.FromKnownColor(KnownColor.ControlDark);
+                CustomSoundButton button = new(text)
+                {
+                    Name = $"buton{i}",
+                    AutoSize = true,
+                    Text = text,
+                    BackColor = Color.FromKnownColor(KnownColor.ControlDark)
+                };
                 button.MouseClick += Program.main!.SongButtons_OnClick!;
                 QueriedPanel.Controls.Add(button);
             }
 
             string te = Settings.Default.hot0.ToString()!;
-            CustomSoundButton bu = new CustomSoundButton(te);
             te = $"Hot Key 0: " + (te == string.Empty ? "!EMPTY!" : te);
-            bu.Name = $"buton0";
-            bu.AutoSize = true;
-            bu.Text = te;
-            bu.BackColor = Color.FromKnownColor(KnownColor.ControlDark);
+            CustomSoundButton bu = new(te)
+            {
+                Name = $"buton0",
+                AutoSize = true,
+                Text = te,
+                BackColor = Color.FromKnownColor(KnownColor.ControlDark)
+            };
             bu.MouseClick += Program.main!.SongButtons_OnClick!;
             QueriedPanel.Controls.Add(bu);
         }

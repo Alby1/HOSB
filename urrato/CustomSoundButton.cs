@@ -9,19 +9,19 @@ namespace HOSB
 
         public CustomSoundButton(string? fileName = null)
         {
-            ContextMenuStrip giorgio = new ContextMenuStrip();
-            ToolStripMenuItem luca = new ToolStripMenuItem("Set as...");
+            ContextMenuStrip giorgio = new();
+            ToolStripMenuItem luca = new("Set as...");
             for(int i = 1; i<=9; i++)
             {
                 int n = i;
-                luca.DropDownItems.Add($"{n}", null, (sender, e) => hotkeySet(n));
+                luca.DropDownItems.Add($"{n}", null, (sender, e) => HotkeySet(n));
             }
-            luca.DropDownItems.Add("0", null, (sender, e) => hotkeySet(0));
+            luca.DropDownItems.Add("0", null, (sender, e) => HotkeySet(0));
             giorgio.Items.Add(luca);
 
             luca.MouseHover += (sender, e) => luca.ShowDropDown();
 
-            ToolStripMenuItem clipboard = new ToolStripMenuItem("Copy to clipboard");
+            ToolStripMenuItem clipboard = new("Copy to clipboard");
             clipboard.Click += (sender, e) =>
             {
                 Clipboard.SetText(fileName!);
@@ -33,7 +33,7 @@ namespace HOSB
             this.fileName = fileName!;
         }
 
-        private void hotkeySet(int a)
+        private void HotkeySet(int a)
         {
             Settings.Default[$"hot{a}"] = fileName;
             Settings.Default.Save();

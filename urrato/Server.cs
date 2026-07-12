@@ -8,8 +8,8 @@ namespace HOSB;
 class Server
 {
     public static Socket? serverSocket;
-    private static readonly List<Socket> clientSockets = new List<Socket>();
-    private static byte[] buffer = new byte[2048];
+    private static readonly List<Socket> clientSockets = [];
+    private static readonly byte[] buffer = new byte[2048];
     private static Socket? current;
     private const int PORT = 7999;
 
@@ -92,7 +92,7 @@ class Server
         }
         else
         {
-            SendData(new byte[1] { 0 });
+            SendData([0]);
         }
 
         current.BeginReceive(buffer, 0, 2048, SocketFlags.None, ReceiveCallback, current);

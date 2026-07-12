@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -36,7 +36,7 @@
 
   <ItemGroup>
     <Reference Include="Hotkeys">
-      <HintPath>..\..\..\HOSB\HOSB\Hotkeys.dll</HintPath>
+      <HintPath>..\Hotkeys.dll</HintPath>
     </Reference>
   </ItemGroup>
 

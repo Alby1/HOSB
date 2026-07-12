@@ -19,63 +19,69 @@ namespace HOSB
             Application.SetCompatibleTextRenderingDefault(false);
             hotKeysForm = new SetHotKeysViewer();
             main = new Form1();
-            using (NotifyIcon icon = new NotifyIcon())
+            using NotifyIcon icon = new();
+            icon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            ContextMenuStrip CMS = new();
+
+            ToolStripMenuItem showItem = new("Show form");
+            showItem.Click += (s, e) => { main.Show(); };
+
+            ToolStripMenuItem quitItem = new("Quit");
+            quitItem.Click += (s, e) =>
             {
-                icon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-                ContextMenuStrip CMS = new ContextMenuStrip();
-                
-                ToolStripMenuItem showItem = new ToolStripMenuItem("Show form");
-                showItem.Click += (s, e) => { main.Show(); };
-                
-                ToolStripMenuItem quitItem = new ToolStripMenuItem("Quit");
-                quitItem.Click += (s, e) => { 
-                    main.Close();
-                    icon.Visible = false;
-                    Application.Exit();
-                };
+                main.Close();
+                icon.Visible = false;
+                Application.Exit();
+            };
 
 
-                ToolStripMenuItem serverActiveItem = new ToolStripMenuItem("Server active");
-                serverActiveItem.CheckOnClick = true;
-                serverActiveItem.Checked = Settings.Default.ServerEnabled;
+            ToolStripMenuItem serverActiveItem = new("Server active")
+            {
+                CheckOnClick = true,
+                Checked = Settings.Default.ServerEnabled
+            };
+            if (serverActiveItem.Checked)
+            {
+                Server.SetupServer();
+            }
+            serverActiveItem.CheckedChanged += (s, e) =>
+            {
                 if (serverActiveItem.Checked)
                 {
                     Server.SetupServer();
                 }
-                serverActiveItem.CheckedChanged += (s, e) => { 
-                    if(serverActiveItem.Checked)
-                    {
-                        Server.SetupServer();
-                    } else
-                    {
-                        Server.CloseAllSockets();
-                    }
+                else
+                {
+                    Server.CloseAllSockets();
+                }
 
-                    Settings.Default.ServerEnabled = serverActiveItem.Checked;
-                    Settings.Default.Save();
-                };
+                Settings.Default.ServerEnabled = serverActiveItem.Checked;
+                Settings.Default.Save();
+            };
 
-                ToolStripMenuItem startMinimizedItem = new ToolStripMenuItem("Start minimized");
-                startMinimizedItem.CheckOnClick = true;
-                startMinimizedItem.Checked = Settings.Default.StartMinimized;
-                startMinimizedItem.CheckedChanged += (s, e) => {
-                    Settings.Default.StartMinimized = startMinimizedItem.Checked;
-                    Settings.Default.Save();
-                };
+            ToolStripMenuItem startMinimizedItem = new("Start minimized")
+            {
+                CheckOnClick = true,
+                Checked = Settings.Default.StartMinimized
+            };
+            startMinimizedItem.CheckedChanged += (s, e) =>
+            {
+                Settings.Default.StartMinimized = startMinimizedItem.Checked;
+                Settings.Default.Save();
+            };
 
-                CMS.Items.Add(showItem);
-                CMS.Items.Add(serverActiveItem);
-                CMS.Items.Add(startMinimizedItem);
-                CMS.Items.Add(quitItem);
+            CMS.Items.Add(showItem);
+            CMS.Items.Add(serverActiveItem);
+            CMS.Items.Add(startMinimizedItem);
+            CMS.Items.Add(quitItem);
 
-                icon.ContextMenuStrip = CMS;
-                icon.Visible = true;
+            icon.ContextMenuStrip = CMS;
+            icon.Visible = true;
 
 
-                if(!Settings.Default.StartMinimized) main.Show();
+            if (!Settings.Default.StartMinimized) main.Show();
 
-                Application.Run();
-            }
+            Application.Run();
         }
 
         public static SetHotKeysViewer? hotKeysForm;

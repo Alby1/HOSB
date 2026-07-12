@@ -31,7 +31,7 @@ namespace HOSB
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            volumeBar = new TrackBar();
+            VolumeBar = new TrackBar();
             ButtonsPanel = new FlowLayoutPanel();
             AudioDirButton = new Button();
             CurrentPathLabel = new Label();
@@ -46,22 +46,22 @@ namespace HOSB
             RAMCleanupTimer = new System.Windows.Forms.Timer(components);
             SingleModeCheckBox = new CheckBox();
             VersionLabel = new Label();
-            ((System.ComponentModel.ISupportInitialize)volumeBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)VolumeBar).BeginInit();
             SuspendLayout();
             // 
-            // volumeBar
+            // VolumeBar
             // 
-            volumeBar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            volumeBar.BackColor = SystemColors.ControlDarkDark;
-            volumeBar.LargeChange = 10;
-            volumeBar.Location = new Point(64, 446);
-            volumeBar.Margin = new Padding(4, 3, 4, 3);
-            volumeBar.Maximum = 100;
-            volumeBar.Name = "volumeBar";
-            volumeBar.Size = new Size(505, 45);
-            volumeBar.TabIndex = 1;
-            volumeBar.TickFrequency = 5;
-            volumeBar.ValueChanged += volumeBar_ValueChanged;
+            VolumeBar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            VolumeBar.BackColor = SystemColors.ControlDarkDark;
+            VolumeBar.LargeChange = 10;
+            VolumeBar.Location = new Point(64, 446);
+            VolumeBar.Margin = new Padding(4, 3, 4, 3);
+            VolumeBar.Maximum = 100;
+            VolumeBar.Name = "VolumeBar";
+            VolumeBar.Size = new Size(505, 45);
+            VolumeBar.TabIndex = 1;
+            VolumeBar.TickFrequency = 5;
+            VolumeBar.ValueChanged += VolumeBar_ValueChanged;
             // 
             // ButtonsPanel
             // 
@@ -249,7 +249,7 @@ namespace HOSB
             Controls.Add(AudioDirButton);
             Controls.Add(StopButton1);
             Controls.Add(CurrentPathLabel);
-            Controls.Add(volumeBar);
+            Controls.Add(VolumeBar);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 3, 4, 3);
             MaximumSize = new Size(931, 1148);
@@ -259,13 +259,13 @@ namespace HOSB
             FormClosing += Form1_FormClosing;
             FormClosed += Form1_FormClosed;
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)volumeBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VolumeBar).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private TrackBar volumeBar;
+        private TrackBar VolumeBar;
         private FlowLayoutPanel ButtonsPanel;
         private Button AudioDirButton;
         private Label CurrentPathLabel;

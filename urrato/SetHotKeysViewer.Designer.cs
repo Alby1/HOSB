@@ -108,7 +108,6 @@ namespace HOSB
         }
 
         #endregion
-        private CustomSoundButton gigio;
         private Button ResetHotKeysButton;
         private FlowLayoutPanel QueriedPanel;
         private Button StopButtonHK;
